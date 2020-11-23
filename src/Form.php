@@ -111,10 +111,10 @@ class Form
 	public function create()
 	{
 		try {
+			$skin = SkinFactory::createSkin($this->skin_name);
 			if (!$this->action_name) {
 				$this->form_action($_SERVER['REQUEST_URI']);
 			}
-			$skin = SkinFactory::createSkin($this->skin_name);
 			$list = [];
 			$this->group_init = (array)($this->group_init??[]);
 			$this->group_data = (array)($this->group_data??[]);
@@ -159,8 +159,8 @@ class Form
 			$form_id = $this->id_name ? 'id="' . $this->id_name . '"' : '';
 			$form_action = $this->action_name ? 'action="' . $this->action_name . '"' : '';
 			$form_method = $this->method_name ? 'method="' . $this->method_name . '"' : '';
-			$class_str = join(' ', array_filter([$this->class_name, $skin->form_class]));
-			$form_class = ($this->class_name or ($skin->form_class || '')) ? 'class="' . $class_str . '"' : '';
+            $_str = join(' ', array_filter([$this->class_name, $skin->form_class]));
+            $form_class = ($this->class_name or ($skin->form_class || '')) ? 'class="' . $_str . '"' : '';
 			$html = <<<ST
 			<form {$form_class} {$form_id} {$form_action} {$form_method}>
 			{$input_html}
@@ -176,6 +176,10 @@ ST;
 	public function create_inline()
 	{
 		try {
+            $skin = SkinFactory::createSkin($this->skin_name);
+            if (!$this->action_name) {
+                $this->form_action($_SERVER['REQUEST_URI']);
+            }
 			$this->init = $this->init??[];
 			$list = [];
 			foreach ($this->init as $value) {
@@ -186,18 +190,19 @@ ST;
 					continue;
 				}
 				$input_value = $this->data[$value['name']]??'';
-				$input_html = $this->render_input($value, $input_value);
+				$input_html = $skin->render_input($value, $input_value);
 				if (!in_array($value['type'], ['hidden'])) {
-					$list[] = $this->render_inline($input_html, $value);
+					$list[] = $skin->render_inline($input_html, $value);
 				} else {
 					$list[] = $input_html;
 				}
 			}
 			$input_html = join("\n", $list);
-			$form_id = $this->config['form_id'] ? 'id="' . $this->config['form_id'] . '"' : '';
-			$form_action = $this->config['form_action'] ? 'action="' . $this->config['form_action'] . '"' : '';
-			$form_method = $this->config['form_method'] ? 'method="' . $this->config['form_method'] . '"' : '';
-			$form_class = $this->config['form_class'] ? 'class="' . $this->config['form_class'] . '"' : '';
+			$form_id = $this->id_name ? 'id="' . $this->id_name . '"' : '';
+			$form_action = $this->action_name ? 'action="' . $this->action_name . '"' : '';
+			$form_method = $this->method_name ? 'method="' . $this->method_name . '"' : '';
+            $_str = join(' ', array_filter([$this->class_name, $skin->form_class]));
+            $form_class = ($this->class_name or ($skin->form_class || '')) ? 'class="' . $_str . '"' : '';
 			$html = <<<ST
 			<form {$form_class} {$form_id} {$form_action} {$form_method}>
             {$input_html}

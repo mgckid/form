@@ -1,9 +1,10 @@
 {
     "name": "mgckid/form",
-    "description": "easy use and no framework dependencies library to generate form html in your php project",
+    "description": "a easy use and no framework dependencies library to generate form html in your php project",
     "type": "library",
+    "keywords":["form","create form","generate form"],
     "require": {
-        "php": "7.0"
+        "php": ">=7.0"
     },
     "license": "MIT",
     "authors": [
@@ -11,5 +12,11 @@
             "name": "mgckid",
             "email": "mgckid@qq.com"
         }
-    ]
+    ],
+    "autoload": {
+      "psr-4": {
+        "mgckid\\form\\": "src/"
+      },
+      "classmap": ["src/"]
+    }
 }
