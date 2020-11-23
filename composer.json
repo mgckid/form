@@ -18,6 +18,5 @@
         "mgckid\\form\\": "src/"
       },
       "classmap": ["src/"]
-    },
-    "minimum-stability": "stable"
+    }
 }
