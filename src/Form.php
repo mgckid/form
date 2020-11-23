@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * 一个使用简单且和框架无关的表单html生成库在你的php项目里
+ * a easy use and no framework dependencies library to generate form html in your php project
  * Created by PhpStorm.
  * User: mgckid
  * Date: 2020/11/21
@@ -84,6 +86,11 @@ class Form
 		return $this;
 	}
 
+    /**
+     * assign form action(指定表单提交链接)
+     * @param $action
+     * @return $this
+     */
 	public function form_action($action)
 	{
 		$this->action_name = $action;
