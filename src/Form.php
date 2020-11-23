@@ -44,7 +44,7 @@ class Form
 		return $this->create();
 	}
 
-	public static function getInstance($skin_name = 'layui')
+	public static function getInstance()
 	{
 		if (!is_object(self::$instance)) {
 			self::$instance = new self();
@@ -97,24 +97,43 @@ class Form
 		return $this;
 	}
 
+    /**
+     *  assign form method(指定表单提交方法)
+     * @param $method_name (get,post)
+     * @return $this
+     */
 	public function form_method($method_name)
 	{
 		$this->method_name = $method_name;
 		return $this;
 	}
 
+    /**
+     * assign form id(指定表单id)
+     * @param $id_name
+     * @return $this
+     */
 	public function form_id($id_name)
 	{
 		$this->id_name = $id_name;
 		return $this;
 	}
 
+    /**
+     *  assign form class(指定表单class)
+     * @param $class_name
+     * @return $this
+     */
 	public function form_class($class_name)
 	{
 		$this->class_name = $class_name;
 		return $this;
 	}
 
+    /**
+     * 创建html表单
+     * @return string
+     */
 	public function create()
 	{
 		try {
@@ -180,6 +199,10 @@ ST;
 		}
 	}
 
+    /**
+     * 创建html内联表单
+     * @return string
+     */
 	public function create_inline()
 	{
 		try {
@@ -222,6 +245,11 @@ ST;
 		}
 	}
 
+    /**
+     * 检查表单input type 是否存在初始化数据里
+     * @param $form_type
+     * @return bool
+     */
 	public function type_in($form_type)
 	{
 		if (!$this->init) {
@@ -235,6 +263,12 @@ ST;
 		}
 	}
 
+    /**
+     * assign input  with type hidden(指定input类型为隐藏域)
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
 	public function input_hidden($name, $value = '')
 	{
 		$init = [
@@ -251,7 +285,15 @@ ST;
 		return $this;
 	}
 
-	//文本输入框
+    /**
+     * assign input  with type text(指定input类型为文本输入框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @param bool $disabled
+     * @return $this
+     */
 	public function input_text($title, $description, $name, $value = '', $disabled = false)
 	{
 		$init = [
@@ -271,27 +313,14 @@ ST;
 		return $this;
 	}
 
-	//日期输入框
-	public function input_date($title, $description, $name, $value = '', $disabled = false)
-	{
-		$init = [
-			'type' => 'date',
-			'name' => $name,
-			'title' => $title,
-			'description' => $description,
-			'disabled' => $disabled,
-		];
-		if ($this->group_name) {
-			$this->group_init[$this->group_name][] = $init;
-			if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
-		} else {
-			$this->init[] = $init;
-			if ($value !== '') $this->data[$name] = $value;
-		}
-		return $this;
-	}
-
-	//密码输入框
+    /**
+     * assign input  with type password(指定input类型为密码输入框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
 	public function input_password($title, $description, $name, $value = '')
 	{
 		$init = [
@@ -310,26 +339,17 @@ ST;
 		return $this;
 	}
 
-	//开关
-	public function switchs($title, $description, $name, $value = '')
-	{
-		$init = [
-			'type' => 'switch',
-			'name' => $name,
-			'title' => $title,
-			'description' => $description,
-		];
-		if ($this->group_name) {
-			$this->group_init[$this->group_name][] = $init;
-			if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
-		} else {
-			$this->init[] = $init;
-			if ($value !== '') $this->data[$name] = $value;
-		}
-		return $this;
-	}
 
-	//复选框
+
+    /**
+     * assign input  with type checkbox(指定input类型为复选框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param array $enum
+     * @param string $value
+     * @return $this
+     */
 	public function checkbox($title, $description, $name, array $enum, $value = '')
 	{
 		$init = [
@@ -349,7 +369,15 @@ ST;
 		return $this;
 	}
 
-	//单选框
+    /**
+     * assign input  with type radio(指定input类型为单选框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param array $enum
+     * @param string $value
+     * @return $this
+     */
 	public function radio($title, $description, $name, array $enum, $value = '')
 	{
 		$init = [
@@ -369,6 +397,15 @@ ST;
 		return $this;
 	}
 
+    /**
+     * assign input  with type select(指定input类型为下拉)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param array $enum
+     * @param string $value
+     * @return $this
+     */
 	public function select($title, $description, $name, array $enum, $value = '')
 	{
 		$init = [
@@ -388,6 +425,14 @@ ST;
 		return $this;
 	}
 
+    /**
+     *  assign input  with type textarea(指定input类型为多行输入框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
 	public function textarea($title, $description, $name, $value = '')
 	{
 		$init = [
@@ -406,25 +451,15 @@ ST;
 		return $this;
 	}
 
-	public function editor($title, $description, $name, $value = '')
-	{
-		$init = [
-			'type' => 'editor',
-			'name' => $name,
-			'title' => $title,
-			'description' => $description,
-			'id' => $name,
-		];
-		if ($this->group_name) {
-			$this->group_init[$this->group_name][] = $init;
-			if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
-		} else {
-			$this->init[] = $init;
-			if ($value !== '') $this->data[$name] = $value;
-		}
-		return $this;
-	}
-
+    /**
+     * assign input with table edit(指定input类型为表格编辑框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param array $init
+     * @param array $value
+     * @return $this
+     */
 	public function table($title, $description, $name, array $init, array $value = [])
 	{
 		$init = [
@@ -444,6 +479,92 @@ ST;
 		return $this;
 	}
 
+    /**
+     *  assign input  with type date(指定input类型为日期输入框)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @param bool $disabled
+     * @return $this
+     */
+    public function input_date($title, $description, $name, $value = '', $disabled = false)
+    {
+        $init = [
+            'type' => 'date',
+            'name' => $name,
+            'title' => $title,
+            'description' => $description,
+            'disabled' => $disabled,
+        ];
+        if ($this->group_name) {
+            $this->group_init[$this->group_name][] = $init;
+            if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
+        } else {
+            $this->init[] = $init;
+            if ($value !== '') $this->data[$name] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * assign input  with type switch(指定开关)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
+    public function switchs($title, $description, $name, $value = '')
+    {
+        $init = [
+            'type' => 'switch',
+            'name' => $name,
+            'title' => $title,
+            'description' => $description,
+        ];
+        if ($this->group_name) {
+            $this->group_init[$this->group_name][] = $init;
+            if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
+        } else {
+            $this->init[] = $init;
+            if ($value !== '') $this->data[$name] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * assign input  with type rich text editer(指定input类型为富文本编辑器)
+     * @param $title
+     * @param $description
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
+    public function editor($title, $description, $name, $value = '')
+    {
+        $init = [
+            'type' => 'editor',
+            'name' => $name,
+            'title' => $title,
+            'description' => $description,
+            'id' => $name,
+        ];
+        if ($this->group_name) {
+            $this->group_init[$this->group_name][] = $init;
+            if ($value !== '') $this->group_data[$this->group_name][$name] = $value;
+        } else {
+            $this->init[] = $init;
+            if ($value !== '') $this->data[$name] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * set form skin
+     * @param $skin_name (layui,simple,adminlte)
+     * @return $this
+     */
 	public function skin($skin_name)
 	{
 		$this->skin_name = $skin_name;

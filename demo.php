@@ -26,10 +26,10 @@ $res = json_decode($res, true);
 </head>
 
 <body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
+
+
 		<?php
-		echo Form::getInstance()
+		 /*Form::getInstance()
 			->input_hidden('id')
 			->input_hidden('is_submit', 0)
 			->input_hidden('site_code', 'JP')
@@ -67,17 +67,49 @@ $res = json_decode($res, true);
 			->select('售卖方式', '', 'sell_type', ['0' => '直接售卖', 3 => '预售'])
 			->input_text('指定销售时间开始', '', 'time_sale_start')
 			->input_text('指定销售时间结束', '', 'time_sale_end')
-            ->create();
+            ->create();*/
 		?>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="autoform">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <?php
+        \mgckid\form\Form::getInstance()
+            ->form_id('test')
+            ->form_class('test')
+            ->form_action('/')
+            ->form_method('post')
+            ->input_hidden('id', 1)
+            ->input_text('user name', '', 'user', 'admin')
+            ->input_password('password', '', 'password', '123456')
+            ->radio('is active', '', 'is_active', [
+                ['value' => '1', 'name' => 'active'],
+                ['value' => '0', 'name' => 'unactive']
+            ], 1)
+            ->switchs('is active', '', 'active', [
+                ['value' => '1', 'name' => 'active'],
+                ['value' => '0', 'name' => 'unactive']
+            ], 1)
+            ->checkbox('user role', '', 'role', [
+                ['value' => '1', 'name' => 'boss'],
+                ['value' => '2', 'name' => 'manager'],
+                ['value' => '3', 'name' => 'employee'],
+            ], '1,2')
+            ->textarea('user desc', '', 'desc', 'hello,My nick is mgckid,I has 10 years work experience')
+            ->select('user department', '', 'department', [
+                ['value' => '1', 'name' => 'sales'],
+                ['value' => '2', 'name' => 'hr'],
+                ['value' => '3', 'name' => 'secured'],
+            ], 1);
+        ?>
+        <div class="layuimini-container">
+            <div class="layuimini-main">
+                <?= \mgckid\form\Form::getInstance()->create() ?>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="autoform">submit</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">reset</button>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
-        </form>
-    </div>
-</div>
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
 <!--您的Layui代码start-->
 <script type="text/javascript">

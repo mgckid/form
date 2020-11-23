@@ -139,7 +139,7 @@ STR;
 				}
 				$checked = in_array($item['value'], $value) ? 'checked' : '';
 				$value_str = $item['value'] ? "value=\"{$item['value']}\"" : '';
-				$enum[] = "<input type=\"checkbox\" {$name_str} {$value_str}  title=\"{$item['name']}\"   {$checked}/> lay-skin=\"primary\"";
+				$enum[] = "<input type=\"checkbox\" {$name_str} {$value_str}  title=\"{$item['name']}\"   {$checked} lay-skin=\"primary\"/>";
 			}
 			$enum = join("\n", $enum);
 			$html = <<<STR

@@ -1,6 +1,6 @@
 {
     "name": "mgckid/form",
-    "description": "a easy use and no framework dependencies library to generate form html in your php project",
+    "description": "一个使用简单且和框架无关的表单html生成库在你的php项目里(a easy use and no framework dependencies library to generate form html in your php project)",
     "type": "library",
     "keywords":["form","create form","generate form"],
     "require": {
