@@ -1,7 +1,5 @@
 ## Form介绍:
->  Form 使用php编写的表单html生成工具库，
-
-
+>  Form是使用php编写的动态表单html生成工具库，
 
 ##  特点:
 
@@ -17,9 +15,18 @@
 
 6. 支持table表单
 
-7. 支持表单美化(默认为layui风格)
+7. 支持表单美化(默认为layui风格)且方便扩展
 
-   
+
+## 项目链接:
+**github**: [https://github.com/mgckid/form](https://github.com/mgckid/form)
+
+**gitee**:[https://gitee.com/mgckid/form](https://gitee.com/mgckid/form)
+
+## 安装方法:
+```
+composer require mgckid/form
+```
 
 ## 快速使用:
 
