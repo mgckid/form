@@ -473,5 +473,5 @@ Form::getInstance()
                 ->create();
 ```
 
-> 更多举例请移步demo目录去运行simple文件查看效果
+> 更多举例请移步demo目录去运行simple.php 查看效果
 
