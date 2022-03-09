@@ -9,7 +9,7 @@
 require __DIR__ . '/../src/Form.php';
 Form::getInstance()
     ->form_method(FORM::form_method_post)
-    ->form_action('/')
+    ->form_action('/simple.php')
     ->input_text('姓名', '', 'name', '法外狂徒张三')
     ->radio('性别', '', 'male', ['male' => '男', 'female' => '女'], 'male')
     ->checkbox('爱好', '', 'interest', ['ktv' => 'K歌', 'dance' => '跳舞', 'movie' => '看电影', 'run' => '跑步'], 'ktv,run')
@@ -36,6 +36,12 @@ Form::getInstance()
         ['value' => '2', 'name' => 'hr'],
         ['value' => '3', 'name' => 'secured'],
     ], 1)
+    ->textarea('自我介绍','','description','法外狂徒张三来自湖北省武汉市武昌区紫阳路36号')
+    ->switch('是否启用','','status',1)
+    //->input_date()
+    //->editor()
+    //->form_data()
+    //->table()
     ->form_class(LayuiForm::form_class_pane);
 ?>
 <!DOCTYPE html>

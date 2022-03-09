@@ -1,6 +1,6 @@
 {
     "name": "mgckid/form",
-    "description": "使用php编写的表单生成工具，支持链式操作和配置创建表单,支持表单美化(layui风格)",
+    "description": "使用php编写的html表单生成工具，没有任何依赖可独立使用,支持链式操作和配置创建表单，支持表单美化(默认为layui风格)",
     "homepage": "https://github.com/mgckid/form",
     "type": "library",
     "keywords":["form generate","form create","layui form","form","表单生成器","表单"],
