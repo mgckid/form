@@ -25,7 +25,7 @@
 
 ### 链式操作创建块表单
 
-![效果图](D:\www\github\form\demo\img\simple.jpg)
+![效果图](https://github.com/mgckid/form/blob/main/demo/img/simple.jpg)
 
 ```php
 <?php
@@ -73,7 +73,7 @@ Form::getInstance()
 
 ### 数组配置创建块表单
 
-![效果](D:\www\github\form\demo\img\simple_array.jpg)
+![效果](https://github.com/mgckid/form/blob/main/demo/img/simple_array.jpg)
 
 ```php
   <?php
@@ -176,7 +176,7 @@ Form::getInstance()
 
 ### 行内表单
 
-![效果](D:\www\github\form\demo\img\simple_line.jpg)
+![效果](https://github.com/mgckid/form/blob/main/demo/img/simple_line.jpg)
 
 ```php
   <?php
@@ -272,7 +272,7 @@ Form::getInstance()
 
 ### table表单
 
-![效果](D:\www\github\form\demo\img\simple_table.jpg)
+![效果](https://github.com/mgckid/form/blob/main/demo/img/simple_table.jpg)
 
 ```php
     <?php
