@@ -27,6 +27,19 @@
 ```
 composer require mgckid/form
 ```
+## 示例代码：
+> 更多举例请移步demo目录去运行simple.php 查看效果。
+```
+> 运行方法 可以使用php自带的web服务器 在cmd命令行中输入以下命令开启。
+php -S 127.0.0.1:88 -t D:\www\github\form\demo
+
+> 在浏览器中 输入访问地址
+http://127.0.0.1:88/simple.php  对应链式操作创建块表单
+http://127.0.0.1:88/simple_array.php  对应数组配置创建块表单
+http://127.0.0.1:88/simple_line.php  对应行内表单
+http://127.0.0.1:88/simple_table.php  对应table表单
+```
+
 
 ## 快速使用:
 
@@ -473,5 +486,5 @@ Form::getInstance()
                 ->create();
 ```
 
-> 更多举例请移步demo目录去运行simple.php 查看效果
+
 
