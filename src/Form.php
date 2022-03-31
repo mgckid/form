@@ -409,7 +409,9 @@ ST;
         if (isset($init_data['name']) and isset($this->form_instance->data[$init_data['name']]))
             $init_data['value'] = $this->form_instance->data[$init_data['name']];
         $input_type = $init_data['type'] ?? '';
-        $input_html = $this->render_input($init_data, $init_data['value'] ?? '', $init_data['description'] ?? '');
+        $description = $init_data['description'] ?? '';
+        $tip_html = $description ? "<tip>{$description}</tip>" : '';
+        $input_html = $this->render_input($init_data, $init_data['value'] ?? '');
         if (strtolower($input_type) == 'hidden') {
             $block_html = <<<ST
             {$input_html}
@@ -431,6 +433,7 @@ ST;
                     <label class="layui-form-label">{$label_text}</label>
                     <div class="layui-input-block">
                         {$input_html}
+                        $tip_html
                     </div>
                 </div>
 ST;
@@ -444,11 +447,13 @@ ST;
             if (isset($init_data['name']) and isset($this->form_instance->data[$init_data['name']]))
                 $init_data['value'] = $this->form_instance->data[$init_data['name']];
             $input_type = $init_data['type'] ?? '';
-            $input_html = $this->render_input($init_data, $init_data['value'] ?? '', $init_data['description'] ?? '');
+            $input_html = $this->render_input($init_data, $init_data['value'] ?? '');
             if (strtolower($input_type) == 'hidden') {
                 $html = <<<ST
             {$input_html}
 ST;
+            } elseif (strtolower($input_type) == 'none') {
+                $html = '';
             } elseif (strtolower($input_type) == 'submit') {
                 $html = <<<ST
                 <div class="layui-inline">
@@ -477,7 +482,7 @@ ST;
         return $block_html;
     }
 
-    private function render_input($init_data, $value, $description = '') {
+    private function render_input($init_data, $value) {
         $init_data['type'] = $init_data['type'] ?? '';
         $init_data['name'] = $init_data['name'] ?? '';
         $init_data['title'] = $init_data['title'] ?? '';

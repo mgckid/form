@@ -53,7 +53,7 @@ require __DIR__ . '/../src/Form.php';
 Form::getInstance()
     ->form_method(Form::form_method_post)
     ->form_action('/')
-    ->input_text('姓名', '', 'name', '法外狂徒张三')
+    ->input_text('姓名', '姓名只能是中文', 'name', '法外狂徒张三')
     ->radio('性别', '', 'male', ['male' => '男', 'female' => '女'], 'male')
     ->checkbox('爱好', '', 'interest', ['ktv' => 'K歌', 'dance' => '跳舞', 'movie' => '看电影', 'run' => '跑步'], 'ktv,run')
     ->input_inline_start()
