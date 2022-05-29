@@ -17,6 +17,9 @@
 
 7. 支持表单美化(默认为layui风格)且方便扩展
 
+## 联系方式:
+如果各位朋友觉得这个程序对你有用，若需要进一步功能扩展和二次开发可以联系我（加群找群主）
+metadmin/metacms/form开源交流qq群（691932844）
 
 ## 项目链接:
 **github**: [https://github.com/mgckid/form](https://github.com/mgckid/form)
