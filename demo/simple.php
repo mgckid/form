@@ -37,7 +37,7 @@ Form::getInstance()
         ['value' => '3', 'name' => 'secured'],
     ], 1)
     ->textarea('自我介绍', '', 'description', '法外狂徒张三来自湖北省武汉市武昌区紫阳路36号')
-    ->switch('是否启用', '', 'status', 1)
+    ->switchs('是否启用', '', 'status', 1)
     //->input_date()
     //->editor()
     //->form_data()
