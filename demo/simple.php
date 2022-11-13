@@ -10,7 +10,7 @@ require __DIR__ . '/../src/Form.php';
 \Form::getInstance()
     ->form_method(\FORM::form_method_post)
     ->form_action('/end.php')
-    ->input_text('姓名', '姓名只能是中文', 'name', '法外狂徒张三')
+    ->input_text('姓名', '姓名只能是中文', 'name', '张三')
     ->radio('性别', '', 'male', ['male' => '男', 'female' => '女'], 'male')
     ->checkbox('爱好', '', 'interest', ['ktv' => 'K歌', 'dance' => '跳舞', 'movie' => '看电影', 'run' => '跑步'], 'ktv,run')
     ->input_inline_start()
@@ -36,7 +36,7 @@ require __DIR__ . '/../src/Form.php';
         ['value' => '2', 'name' => 'hr'],
         ['value' => '3', 'name' => 'secured'],
     ], 1)
-    ->textarea('自我介绍', '', 'description', '法外狂徒张三来自湖北省武汉市武昌区紫阳路36号')
+    ->textarea('自我介绍', '', 'description', '张三来自湖北省武汉市武昌区紫阳路36号')
     ->switchs('是否启用', '', 'status', 1)
     //->input_date()
     //->editor()
