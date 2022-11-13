@@ -7,36 +7,36 @@
  * Time: 23:46
  */
 require __DIR__ . '/../src/Form.php';
-$form_init = array (
-    'id' =>array (
+$form_init = array(
+    'id' => array(
         'title' => '主键',
         'name' => 'id',
         'description' => '主键',
-        'enum' =>array(),
+        'enum' => array(),
         'type' => 'hidden',
         'widget_type' => '',
     ),
-    'name' =>array (
+    'name' => array(
         'title' => '配置名称',
         'name' => 'name',
         'description' => '配置名称',
-        'enum' =>array(),
+        'enum' => array(),
         'type' => 'text',
         'widget_type' => '',
     ),
-    'description' =>array (
+    'description' => array(
         'title' => '配置描述',
         'name' => 'description',
         'description' => '配置描述',
-        'enum' =>array(),
+        'enum' => array(),
         'type' => 'text',
         'widget_type' => '',
     ),
-    'input_type' =>array (
+    'input_type' => array(
         'title' => '表单类型',
         'name' => 'input_type',
         'description' => '表单类型',
-        'enum' =>array (
+        'enum' => array(
             'hidden' => '隐藏域',
             'select' => '下拉',
             'radio' => '单选按钮',
@@ -51,27 +51,27 @@ $form_init = array (
         'type' => 'select',
         'widget_type' => '',
     ),
-    'created' =>array (
+    'created' => array(
         'title' => '创建时间',
         'name' => 'created',
         'description' => '创建时间',
-        'enum' =>array(),
+        'enum' => array(),
         'type' => 'none',
         'widget_type' => 'date',
     ),
-    'modified' =>array (
+    'modified' => array(
         'title' => '修改时间',
         'name' => 'modified',
         'description' => '修改时间',
-        'enum' =>array(),
+        'enum' => array(),
         'type' => 'none',
         'widget_type' => 'date',
     ),
-    'deleted' =>array (
+    'deleted' => array(
         'title' => '删除标记',
         'name' => 'deleted',
         'description' => '删除标记',
-        'enum' =>array (
+        'enum' => array(
             0 => '未删除',
             1 => '已删除',
         ),
@@ -79,9 +79,9 @@ $form_init = array (
         'widget_type' => '',
     ),
 );
-$form_data=array (
+$form_data = array(
     0 =>
-        array (
+        array(
             'id' => 73,
             'name' => 'solution_introduction',
             'value' => '111',
@@ -92,7 +92,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     1 =>
-        array (
+        array(
             'id' => 72,
             'name' => 'tese_product_introduction',
             'value' => '222',
@@ -103,7 +103,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     2 =>
-        array (
+        array(
             'id' => 71,
             'name' => 'new_product_introduction',
             'value' => '333',
@@ -114,7 +114,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     3 =>
-        array (
+        array(
             'id' => 70,
             'name' => 'site_pinterest',
             'value' => '',
@@ -125,7 +125,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     4 =>
-        array (
+        array(
             'id' => 69,
             'name' => 'site_twitter',
             'value' => '',
@@ -136,7 +136,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     5 =>
-        array (
+        array(
             'id' => 68,
             'name' => 'site_facebook',
             'value' => '',
@@ -147,7 +147,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     6 =>
-        array (
+        array(
             'id' => 67,
             'name' => 'site_google_plus',
             'value' => '',
@@ -158,7 +158,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     7 =>
-        array (
+        array(
             'id' => 66,
             'name' => 'site_linkedin',
             'value' => '',
@@ -169,7 +169,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     8 =>
-        array (
+        array(
             'id' => 65,
             'name' => 'site_livechat_code',
             'value' => '',
@@ -180,7 +180,7 @@ $form_data=array (
             'deleted' => 0,
         ),
     9 =>
-        array (
+        array(
             'id' => 64,
             'name' => 'site_skype',
             'value' => '',
@@ -192,7 +192,9 @@ $form_data=array (
         )
 );
 \Form::getInstance()
-    ->table('扩展配置', '', 'site_config', $form_init, $form_data)
+    ->form_method(\FORM::form_method_post)
+    ->form_action('/end.php')
+    ->table('扩展配置', '', 'simple_table', $form_init, $form_data)
     ->create();
 ?>
 <!DOCTYPE html>
@@ -270,15 +272,17 @@ $form_data=array (
                 data.form.action,
                 data.field,
                 function (res) {
+                    console.log(res.status);
                     if (res.status != 1) {
-                        layer.alert(res.msg||'接口出错')
+                        layer.alert(res.msg || '接口出错')
                     } else {
                         layer.msg(res.msg, {
                             icon: 1,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
                         }, function () {
                             //do something
-                            parent.window.location.reload();
+                            //parent.window.location.reload(); //打开注释可以重载页面
+
                         });
                     }
                 }

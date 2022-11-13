@@ -90,7 +90,8 @@ $init = array(
     ->input_submit('<i class="layui-icon"></i> 搜索', ' class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"', 'class="layui-btn layui-btn-primary"')
     ->input_inline_end()
     ->form_class(\LayuiForm::form_class_pane)
-    ->form_method(Form::form_method_get)
+    ->form_method(\Form::form_method_get)
+    ->form_action('/end.php')
     ->create();
 ?>
 <!DOCTYPE html>
@@ -106,7 +107,7 @@ $init = array(
         <fieldset class="table-search-fieldset">
             <legend>搜索信息</legend>
             <div style="margin: 10px 0px 10px 0px">
-                <?= Form::getInstance()->form_method(Form::form_method_get)->create() ?>
+                <?= \Form::getInstance()->form_method(\Form::form_method_get)->create() ?>
             </div>
         </fieldset>
     </div>
@@ -134,7 +135,7 @@ $init = array(
                                 time: 2000 //2秒关闭（如果不配置，默认是3秒）
                             }, function () {
                                 //do something
-                                parent.window.location.reload();
+                                //parent.window.location.reload(); //打开注释可以重载页面
                             });
                         }
                     }

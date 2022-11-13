@@ -7,9 +7,9 @@
  * Time: 23:46
  */
 require __DIR__ . '/../src/Form.php';
-Form::getInstance()
-    ->form_method(FORM::form_method_post)
-    ->form_action('/simple.php')
+\Form::getInstance()
+    ->form_method(\FORM::form_method_post)
+    ->form_action('/end.php')
     ->input_text('姓名', '姓名只能是中文', 'name', '法外狂徒张三')
     ->radio('性别', '', 'male', ['male' => '男', 'female' => '女'], 'male')
     ->checkbox('爱好', '', 'interest', ['ktv' => 'K歌', 'dance' => '跳舞', 'movie' => '看电影', 'run' => '跑步'], 'ktv,run')
@@ -74,7 +74,7 @@ Form::getInstance()
     .layuimini-container .table-search-fieldset {margin: 0;border: 1px solid #e6e6e6;padding: 10px 20px 5px 20px;color: #6b6b6b;}
 </style>
 <div class="layui-form layuimini-form">
-    <?= Form::getInstance()->input_submit('确认保存', 'class="layui-btn" lay-submit lay-filter="saveBtn"')->create() ?>
+    <?= \Form::getInstance()->input_submit('确认保存', 'class="layui-btn" lay-submit lay-filter="saveBtn"')->create() ?>
 </div>
 <script src="https://www.layuicdn.com/layui-v2.5.5/layui.js"></script>
 <script>
@@ -99,7 +99,7 @@ Form::getInstance()
                                 time: 2000 //2秒关闭（如果不配置，默认是3秒）
                             }, function () {
                                 //do something
-                                parent.window.location.reload();
+                                //parent.window.location.reload(); //打开注释可以重载页面
                             });
                         }
                     }

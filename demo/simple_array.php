@@ -7,9 +7,9 @@
  * Time: 23:46
  */
 require __DIR__ . '/../src/Form.php';
-$init = array (
+$init = array(
     0 =>
-        array (
+        array(
             'title' => '自增主键',
             'name' => 'id',
             'description' => '自增主键',
@@ -20,7 +20,7 @@ $init = array (
             'dict_value' => 'id',
         ),
     1 =>
-        array (
+        array(
             'title' => '文档id',
             'name' => 'post_id',
             'description' => '文档id',
@@ -31,12 +31,12 @@ $init = array (
             'dict_value' => 'post_id',
         ),
     2 =>
-        array (
+        array(
             'title' => '所属栏目',
             'name' => 'category_id',
             'description' => '所属栏目',
             'enum' =>
-                array (
+                array(
                     1 => '开发',
                     2 => '互联网圈子',
                     3 => '关于',
@@ -48,12 +48,12 @@ $init = array (
             'dict_value' => 'category_id',
         ),
     3 =>
-        array (
+        array(
             'title' => '所属模型',
             'name' => 'model_id',
             'description' => '所属模型',
             'enum' =>
-                array (
+                array(
                     'article' => '文章',
                     'product' => '产品',
                 ),
@@ -62,7 +62,7 @@ $init = array (
             'dict_value' => 'model_id',
         ),
     4 =>
-        array (
+        array(
             'title' => '文档标题',
             'name' => 'title',
             'description' => '文档标题',
@@ -73,7 +73,7 @@ $init = array (
             'dict_value' => 'title',
         ),
     5 =>
-        array (
+        array(
             'title' => '文档关键词',
             'name' => 'keywords',
             'description' => '文档关键词',
@@ -84,7 +84,7 @@ $init = array (
             'dict_value' => 'keywords',
         ),
     6 =>
-        array (
+        array(
             'title' => '文档描述',
             'name' => 'description',
             'description' => '文档描述',
@@ -95,7 +95,7 @@ $init = array (
             'dict_value' => 'description',
         ),
     7 =>
-        array (
+        array(
             'title' => '文档主图',
             'name' => 'main_image',
             'description' => '文档主图',
@@ -106,7 +106,7 @@ $init = array (
             'dict_value' => 'main_image',
         ),
     8 =>
-        array (
+        array(
             'title' => '文档标签(,隔开)',
             'name' => 'post_tag',
             'description' => '文档标签(,隔开)',
@@ -117,7 +117,7 @@ $init = array (
             'dict_value' => 'post_tag',
         ),
     9 =>
-        array (
+        array(
             'title' => '点击数',
             'name' => 'click',
             'description' => '点击数',
@@ -128,7 +128,7 @@ $init = array (
             'dict_value' => 'click',
         ),
     10 =>
-        array (
+        array(
             'title' => '作者',
             'name' => 'author',
             'description' => '作者',
@@ -139,12 +139,12 @@ $init = array (
             'dict_value' => 'author',
         ),
     11 =>
-        array (
+        array(
             'title' => '是否发布',
             'name' => 'is_publish',
             'description' => '是否发布',
             'enum' =>
-                array (
+                array(
                     0 => '未发布',
                     1 => '已发布',
                 ),
@@ -153,12 +153,12 @@ $init = array (
             'dict_value' => 'is_publish',
         ),
     12 =>
-        array (
+        array(
             'title' => '是否推荐',
             'name' => 'is_recommed',
             'description' => '是否推荐',
             'enum' =>
-                array (
+                array(
                     1 => '一级推荐',
                     2 => '二级推荐',
                     3 => '三级推荐',
@@ -169,12 +169,12 @@ $init = array (
             'dict_value' => 'is_recommed',
         ),
     13 =>
-        array (
+        array(
             'title' => '是否删除',
             'name' => 'deleted',
             'description' => '是否删除',
             'enum' =>
-                array (
+                array(
                     0 => '未删除',
                     1 => '已删除',
                 ),
@@ -183,7 +183,7 @@ $init = array (
             'dict_value' => 'deleted',
         ),
     14 =>
-        array (
+        array(
             'title' => '文档排序',
             'name' => 'sort',
             'description' => '文档排序',
@@ -194,7 +194,7 @@ $init = array (
             'dict_value' => 'sort',
         ),
     15 =>
-        array (
+        array(
             'title' => '创建时间',
             'name' => 'created',
             'description' => '创建时间',
@@ -205,7 +205,7 @@ $init = array (
             'dict_value' => 'created',
         ),
     16 =>
-        array (
+        array(
             'title' => '修改时间',
             'name' => 'modified',
             'description' => '修改时间',
@@ -216,7 +216,7 @@ $init = array (
             'dict_value' => 'modified',
         ),
     17 =>
-        array (
+        array(
             'title' => '文章内容',
             'name' => 'content',
             'description' => '文章内容',
@@ -227,7 +227,8 @@ $init = array (
             'dict_value' => 'content',
         ),
 );
-$form_data = array (
+
+$form_data = array(
     'model_id' => 'article',
     'category_id' => '',
     'post_id' => '2216267480655467',
@@ -236,7 +237,11 @@ $form_data = array (
     'sort' => 10000,
     'author' => '管理员',
 );
-\Form::getInstance()->form_schema($init)->form_data($form_data);
+\Form::getInstance()
+    ->form_method(\FORM::form_method_post)
+    ->form_action('/end.php')
+    ->form_schema($init)
+    ->form_data($form_data);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -247,7 +252,7 @@ $form_data = array (
 </head>
 <body>
 <div class="layui-form layuimini-form">
-    <?= Form::getInstance()->input_submit('确认保存', 'class="layui-btn" lay-submit lay-filter="saveBtn"')->create() ?>
+    <?= \Form::getInstance()->input_submit('确认保存', 'class="layui-btn" lay-submit lay-filter="saveBtn"')->create() ?>
 </div>
 <script src="https://www.layuicdn.com/layui-v2.5.5/layui.js"></script>
 <script>
@@ -272,7 +277,7 @@ $form_data = array (
                                 time: 2000 //2秒关闭（如果不配置，默认是3秒）
                             }, function () {
                                 //do something
-                                parent.window.location.reload();
+                                //parent.window.location.reload(); //打开注释可以重载页面
                             });
                         }
                     }
@@ -283,7 +288,7 @@ $form_data = array (
 
     });
 </script>
-<?php if(Form::getInstance()->type_in('file')):?>
+<?php if (\Form::getInstance()->type_in('file')): ?>
     <script>
         layui.use(['layer', 'upload', 'element'], function () {
             var layer = layui.layer,
@@ -375,8 +380,8 @@ $form_data = array (
             })
         });
     </script>
-<?php endif;?>
-<?php if(Form::getInstance()->type_in('date')):?>
+<?php endif; ?>
+<?php if (\Form::getInstance()->type_in('date')): ?>
     <script>
         layui.use(['laydate'], function () {
             var laydate = layui.laydate;
@@ -387,40 +392,40 @@ $form_data = array (
             })
         })
     </script>
-<?php endif;?>
-<?php if(Form::getInstance()->type_in('editor')):?>
-<script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.all.min.js"></script>
-<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.parse.js"></script>
-<script>
-    layui.use(['layer'], function () {
-        var $ = layui.jquery;
+<?php endif; ?>
+<?php if (\Form::getInstance()->type_in('editor')): ?>
+    <script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.all.min.js"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/admin/ueditor1_4_3_3/ueditor.parse.js"></script>
+    <script>
+        layui.use(['layer'], function () {
+            var $ = layui.jquery;
 
-        function ueditor(contentBox) {
-            uParse(contentBox, {
-                rootPath: '/static/admin/ueditor1_4_3_3/'
-            });
-            //实例化编辑器
-            //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-            var config = {
-                serverUrl: '<?=url('admin/Ueditor/index')?>',
-                autoFloatEnabled: false,
-                initialFrameHeight: 1000,
-            };
-            var ue = UE.getEditor(contentBox, config);
-        }
-
-        $("textarea[input_type='editor']").each(function (i, n) {
-            var _id = $(this).attr('id')||'';
-            if ((_id != '' || _id != undefined) & _id.length > 0) {
-                ueditor(_id);
+            function ueditor(contentBox) {
+                uParse(contentBox, {
+                    rootPath: '/static/admin/ueditor1_4_3_3/'
+                });
+                //实例化编辑器
+                //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+                var config = {
+                    serverUrl: '<?=url('admin/Ueditor/index')?>',
+                    autoFloatEnabled: false,
+                    initialFrameHeight: 1000,
+                };
+                var ue = UE.getEditor(contentBox, config);
             }
+
+            $("textarea[input_type='editor']").each(function (i, n) {
+                var _id = $(this).attr('id') || '';
+                if ((_id != '' || _id != undefined) & _id.length > 0) {
+                    ueditor(_id);
+                }
+            })
         })
-    })
-</script>
-<?php endif;?>
+    </script>
+<?php endif; ?>
 </body>
 </html>

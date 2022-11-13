@@ -36,6 +36,9 @@ composer require mgckid/form
 > 运行方法 可以使用php自带的web服务器 在cmd命令行中输入以下命令开启。
 php -S 127.0.0.1:88 -t D:\www\github\form\demo
 
+注意：-t D:\www\github\form\demo 要换成你存放代码的路径 即 
+php -S 127.0.0.1:88 -t {你的代码绝对路径}\form\demo
+
 > 在浏览器中 输入访问地址
 http://127.0.0.1:88/simple.php  对应链式操作创建块表单
 http://127.0.0.1:88/simple_array.php  对应数组配置创建块表单
