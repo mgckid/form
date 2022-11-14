@@ -1,5 +1,5 @@
 ## Form介绍:
->  Form是使用php编写的动态表单html生成工具库，
+>  使用php编写的html动态表单生成工具，没有任何依赖可独立使用,支持链式操作和配置创建表单，支持表单美化(默认为layui风格，支持jquery控制表单行为，只需要引入layui样式和js即可)。
 
 ##  特点:
 
@@ -17,6 +17,9 @@
 
 7. 支持表单美化(默认为layui风格)且方便扩展
 
+## 联系方式:
+如果各位朋友觉得这个程序对你有用，若需要进一步功能扩展和二次开发可以联系我（加群找群主）
+metadmin/metacms/form开源交流qq群（691932844）
 
 ## 项目链接:
 **github**: [https://github.com/mgckid/form](https://github.com/mgckid/form)
@@ -27,6 +30,22 @@
 ```
 composer require mgckid/form
 ```
+## 示例代码：
+> 更多举例请移步demo目录去运行simple.php 查看效果。
+```
+> 运行方法 可以使用php自带的web服务器 在cmd命令行中输入以下命令开启。
+php -S 127.0.0.1:88 -t D:\www\github\form\demo
+
+注意：-t D:\www\github\form\demo 要换成你存放代码的路径 即 
+php -S 127.0.0.1:88 -t {你的代码绝对路径}\form\demo
+
+> 在浏览器中 输入访问地址
+http://127.0.0.1:88/simple.php  对应链式操作创建块表单
+http://127.0.0.1:88/simple_array.php  对应数组配置创建块表单
+http://127.0.0.1:88/simple_line.php  对应行内表单
+http://127.0.0.1:88/simple_table.php  对应table表单
+```
+
 
 ## 快速使用:
 
@@ -40,7 +59,7 @@ require __DIR__ . '/../src/Form.php';
 Form::getInstance()
     ->form_method(Form::form_method_post)
     ->form_action('/')
-    ->input_text('姓名', '', 'name', '法外狂徒张三')
+    ->input_text('姓名', '姓名只能是中文', 'name', '张三')
     ->radio('性别', '', 'male', ['male' => '男', 'female' => '女'], 'male')
     ->checkbox('爱好', '', 'interest', ['ktv' => 'K歌', 'dance' => '跳舞', 'movie' => '看电影', 'run' => '跑步'], 'ktv,run')
     ->input_inline_start()
@@ -473,5 +492,5 @@ Form::getInstance()
                 ->create();
 ```
 
-> 更多举例请移步demo目录去运行simple.php 查看效果
+
 

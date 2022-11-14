@@ -166,7 +166,7 @@ class Form {
     }
 
     //开关
-    public function switch($title, $description, $name, $value = '', $disabled = false, $autocomplete = self::autocomplete_off, $verify = [self::verify_required]) {
+    public function switchs($title, $description, $name, $value = '', $disabled = false, $autocomplete = self::autocomplete_off, $verify = [self::verify_required]) {
         $init = [
             'type' => 'switch',
             'name' => $name,
@@ -383,7 +383,7 @@ class  LayuiForm {
     public function create(Form $formObj) {
         $this->form_instance = $formObj;
         //渲染html
-        $formObj->schema = array_values($formObj->schema ?? []);
+        $formObj->schema = array_values($formObj->schema ?: []);
         $item_html = [];
         foreach ($formObj->schema as $item) {
             $is_block = isset($item['type']) ? true : false;
@@ -408,8 +408,10 @@ ST;
     private function render_item_block($init_data) {
         if (isset($init_data['name']) and isset($this->form_instance->data[$init_data['name']]))
             $init_data['value'] = $this->form_instance->data[$init_data['name']];
-        $input_type = $init_data['type'] ?? '';
-        $input_html = $this->render_input($init_data, $init_data['value'] ?? '', $init_data['description'] ?? '');
+        $input_type = isset($init_data['type']) ? $init_data['type'] : '';
+        $description = isset($init_data['description']) ? $init_data['description'] : '';
+        $tip_html = $description ? "<tip>{$description}</tip>" : '';
+        $input_html = $this->render_input($init_data, isset($init_data['value']) ? $init_data['value'] : '');
         if (strtolower($input_type) == 'hidden') {
             $block_html = <<<ST
             {$input_html}
@@ -425,12 +427,13 @@ ST;
                 </div>
 ST;
         } else {
-            $label_text = $init_data['title'] ?? '';
+            $label_text = isset($init_data['title']) ? $init_data['title'] : '';
             $block_html = <<<ST
                 <div class="layui-form-item">
                     <label class="layui-form-label">{$label_text}</label>
                     <div class="layui-input-block">
                         {$input_html}
+                        $tip_html
                     </div>
                 </div>
 ST;
@@ -443,12 +446,14 @@ ST;
         foreach ($item_datas as $init_data) {
             if (isset($init_data['name']) and isset($this->form_instance->data[$init_data['name']]))
                 $init_data['value'] = $this->form_instance->data[$init_data['name']];
-            $input_type = $init_data['type'] ?? '';
-            $input_html = $this->render_input($init_data, $init_data['value'] ?? '', $init_data['description'] ?? '');
+            $input_type = isset($init_data['type']) ? $init_data['type'] : '';
+            $input_html = $this->render_input($init_data, isset($init_data['value']) ? $init_data['value'] : '');
             if (strtolower($input_type) == 'hidden') {
                 $html = <<<ST
             {$input_html}
 ST;
+            } elseif (strtolower($input_type) == 'none') {
+                $html = '';
             } elseif (strtolower($input_type) == 'submit') {
                 $html = <<<ST
                 <div class="layui-inline">
@@ -456,7 +461,7 @@ ST;
                 </div>
 ST;
             } else {
-                $label_text = $init_data['title'] ?? '';
+                $label_text = isset($init_data['title']) ? $init_data['title'] : '';
                 $html = <<<str
                     <div class="layui-inline">
                         <label class="layui-form-label">{$label_text}</label>
@@ -477,15 +482,15 @@ ST;
         return $block_html;
     }
 
-    private function render_input($init_data, $value, $description = '') {
-        $init_data['type'] = $init_data['type'] ?? '';
-        $init_data['name'] = $init_data['name'] ?? '';
-        $init_data['title'] = $init_data['title'] ?? '';
-        $init_data['enum'] = $init_data['enum'] ?? [];
-        $init_data['disabled'] = $init_data['disabled'] ?? false;
+    private function render_input($init_data, $value) {
+        $init_data['type'] = isset($init_data['type']) ? $init_data['type'] : '';
+        $init_data['name'] = isset($init_data['name']) ? $init_data['name'] : '';
+        $init_data['title'] = isset($init_data['title']) ? $init_data['title'] : '';
+        $init_data['enum'] = isset($init_data['enum']) ? $init_data['enum'] : [];
+        $init_data['disabled'] = isset($init_data['disabled']) ? $init_data['disabled'] : false;
         if ($init_data['type'] == 'submit') {
-            $init_data['raw_text'] = $init_data['raw_text'] ?? '';
-            $init_data['reset_btn_raw_text'] = $init_data['reset_btn_raw_text'] ?? '';
+            $init_data['raw_text'] = isset($init_data['raw_text']) ? $init_data['raw_text'] : '';
+            $init_data['reset_btn_raw_text'] = isset($init_data['reset_btn_raw_text']) ? $init_data['reset_btn_raw_text'] : '';
             if ($init_data['reset_btn_raw_text']) {
                 $reset_html = <<<STR
     <button type="reset" {$init_data['reset_btn_raw_text']} >重置</button>
@@ -542,12 +547,12 @@ STR;
         } elseif ($init_data['type'] == 'select') {
             $disabled_str = $init_data['disabled'] ? 'disabled' : '';
             $name_str = $init_data['name'] ? "name=\"{$init_data['name']}\"" : '';
-            $init_data['enum'] = $init_data['enum'] ?? [];
+            $init_data['enum'] = isset($init_data['enum']) ? $init_data['enum'] : [];
             $enum = [];
             foreach ($init_data['enum'] as $key => $item) {
                 if (is_array($item)) {
-                    $item['value'] = $item['value'] ?? '';
-                    $item['name'] = $item['name'] ?? '';
+                    $item['value'] = isset($item['value']) ? $item['value'] : '';
+                    $item['name'] = isset($item['name']) ? $item['name'] : '';
                 } elseif (is_scalar($item)) {
                     $_name = $item;
                     $item = [];
@@ -569,14 +574,14 @@ STR;
         } elseif ($init_data['type'] == 'select_multi') {
             $disabled_str = $init_data['disabled'] ? 'disabled' : '';
             $name_str = $init_data['name'] ? "name=\"{$init_data['name']}\"" : '';
-            $init_data['enum'] = $init_data['enum'] ?? [];
+            $init_data['enum'] = isset($init_data['enum']) ? $init_data['enum'] : [];
             $enum = [];
             $value = str_replace('|', ',', $value);
             $value = is_scalar($value) ? explode(',', $value) : $value;
             foreach ($init_data['enum'] as $key => $item) {
                 if (is_array($item)) {
-                    $item['value'] = $item['value'] ?? '';
-                    $item['name'] = $item['name'] ?? '';
+                    $item['value'] = isset($item['value']) ? $item['value'] : '';
+                    $item['name'] = isset($item['name']) ? $item['name'] : '';
                 } elseif (is_scalar($item)) {
                     $_name = $item;
                     $item = [];
@@ -597,13 +602,13 @@ STR;
 STR;
         } elseif ($init_data['type'] == 'radio') {
             $name_str = $init_data['name'] ? "name=\"{$init_data['name']}\"" : '';
-            $init_data['enum'] = $init_data['enum'] ?? [];
+            $init_data['enum'] = isset($init_data['enum']) ? $init_data['enum'] : [];
             $value = (string)$value;
             $enum = [];
             foreach ($init_data['enum'] as $key => $item) {
                 if (is_array($item)) {
-                    $item['value'] = $item['value'] ?? '';
-                    $item['name'] = $item['name'] ?? '';
+                    $item['value'] = isset($item['value']) ? $item['value'] : '';
+                    $item['name'] = isset($item['name']) ? $item['name'] : '';
                 } elseif (is_scalar($item)) {
                     $_name = $item;
                     $item = [];
@@ -621,14 +626,14 @@ STR;
 STR;
         } elseif ($init_data['type'] == 'checkbox') {
             $name_str = $init_data['name'] ? "name=\"{$init_data['name']}[]\"" : '';
-            $init_data['enum'] = $init_data['enum'] ?? [];
+            $init_data['enum'] = isset($init_data['enum']) ? $init_data['enum'] : [];
             $value = str_replace('|', ',', $value);
             $value = is_scalar($value) ? explode(',', $value) : $value;
             $enum = [];
             foreach ($init_data['enum'] as $key => $item) {
                 if (is_array($item)) {
-                    $item['value'] = $item['value'] ?? '';
-                    $item['name'] = $item['name'] ?? '';
+                    $item['value'] = isset($item['value']) ? $item['value'] : '';
+                    $item['name'] = isset($item['name']) ? $item['name'] : '';
                 } elseif (is_scalar($item)) {
                     $_name = $item;
                     $item = [];
@@ -652,19 +657,19 @@ STR;
             <input type="checkbox" {$name_str} lay-skin="switch" {$checked}/>
 STR;
         } elseif ($init_data['type'] == 'textarea') {
-            $name_str = $init_data['name'] ?? '' ? "name=\"{$init_data['name']}\"" : '';
-            $id_str = $init_data['name'] ?? '' ? "id=\"{$init_data['name']}\"" : '';
+            $name_str = (isset($init_data['name']) and $init_data['name']) ? "name=\"{$init_data['name']}\"" : '';
+            $id_str = (isset($init_data['name']) and $init_data['name']) ? "id=\"{$init_data['name']}\"" : '';
             $html = <<<STR
             <textarea {$id_str} {$name_str} placeholder="请输入内容"  class="layui-textarea" >{$value}</textarea>
 STR;
         } elseif ($init_data['type'] == 'table') {
             $value = (array)$value;
-            $init_data['init'] = $init_data['init'] ?? [];
+            $init_data['init'] = $init_data['init'] ?: [];
             foreach ($init_data['init'] as $v) {
                 if (in_array($v['type'], ['hidden', 'none'])) {
                     continue;
                 }
-                $v['title'] = $v['title'] ?? '';
+                $v['title'] = isset($v['title']) ? $v['title'] : '';
                 $th[] = "<th>{$v['title']}</th>";
             }
             $th = join("\n", $th);
@@ -676,10 +681,10 @@ STR;
                 foreach ($init_data['init'] as $v) {
                     if ($v['type'] == 'none')
                         continue;
-                    $v['name'] = $v['name'] ?? '';
+                    $v['name'] = isset($v['name']) ? $v['name'] : '';
                     $_init = $v;
                     $_init['name'] = "{$init_data['name']}[{$i}][{$v['name']}]";
-                    $input_html = $this->render_input($_init, $val[$v['name']] ?? '');
+                    $input_html = $this->render_input($_init, isset($val[$v['name']]) ? $val[$v['name']] : '');
                     if (in_array($v['type'], ['hidden'])) {
                         $td[] = $input_html;
                     } else {
@@ -697,8 +702,8 @@ STR;
                         <tfoot></tfoot>
                     </table>";
         } elseif ($init_data['type'] == 'file') {
-            $init_data['type'] = $init_data['type'] ?? '';
-            $init_data['name'] = $init_data['name'] ?? '';
+            $init_data['type'] = isset($init_data['type']) ? $init_data['type'] : '';
+            $init_data['name'] = isset($init_data['name']) ? $init_data['name'] : '';
             $class_str = "class=\"file\"";
 
             $html = [];
@@ -714,12 +719,12 @@ STR;
             }
             $html = join("\n", $html);
         } elseif ($init_data['type'] == 'editor') {
-            $name_str = $init_data['name'] ?? '' ? "name=\"{$init_data['name']}\"" : '';
-            $id_str = $init_data['name'] ?? '' ? "id=\"{$init_data['name']}\"" : '';
+            $name_str = (isset($init_data['name']) and $init_data['name'])? "name=\"{$init_data['name']}\"" : '';
+            $id_str = (isset($init_data['name']) and $init_data['name']) ? "id=\"{$init_data['name']}\"" : '';
             $html = "<textarea {$id_str} {$name_str} placeholder=\"请输入内容\" input_type=\"editor\">{$value}</textarea>";
         } else {
-            $init_data['type'] = $init_data['type'] ?? '';
-            // $init_data['name'] = $init_data['name'] ?? '';
+            $init_data['type'] = isset($init_data['type']) ? $init_data['type'] : '';
+            // $init_data['name'] = $init_data['name'] ?: '';
             $init_data['name'] = is_scalar($init_data['name']) ? $init_data['name'] : json_encode($init_data['name']);
             $name_str = $init_data['name'] ? "name=\"{$init_data['name']}\"" : '';
 
