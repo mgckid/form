@@ -13,85 +13,104 @@ $init = array(
         'name' => 'id',
         'description' => 'Id',
         'enum' => array(),
-        'type' => 'hidden',
+        'type' => 'text',
         'widget_type' => '',
     ),
     1 => array(
-        'title' => '用户id',
-        'name' => 'user_id',
-        'description' => '用户id',
+        'title' => '代码',
+        'name' => 'sambol',
+        'description' => '代码',
         'enum' => array(),
         'type' => 'text',
         'widget_type' => '',
     ),
     2 => array(
-        'title' => '用户名',
-        'name' => 'username',
-        'description' => '用户名',
+        'title' => '名称',
+        'name' => 'name',
+        'description' => '名称',
         'enum' => array(),
         'type' => 'text',
         'widget_type' => '',
     ),
     3 => array(
-        'title' => '真实姓名',
-        'name' => 'true_name',
-        'description' => '真实姓名',
+        'title' => '市销率',
+        'name' => 'ps_ttm',
+        'description' => '市销率',
         'enum' => array(),
-        'type' => 'text',
+        'type' => 'range',
         'widget_type' => '',
     ),
     4 => array(
-        'title' => '密码',
-        'name' => 'password',
-        'description' => '密码',
+        'title' => '涨跌幅',
+        'name' => 'percent',
+        'description' => '涨跌幅',
         'enum' => array(),
-        'type' => 'text',
+        'type' => 'range',
         'widget_type' => '',
     ),
-    5 => array(
-        'title' => '邮箱',
-        'name' => 'email',
-        'description' => '邮箱',
+    array(
+        'title' => '市净率',
+        'name' => 'pb_ttm',
+        'description' => '市净率',
         'enum' => array(),
-        'type' => 'text',
+        'type' => 'range',
         'widget_type' => '',
     ),
-    6 => array(
-        'title' => '是否删除',
-        'name' => 'deleted',
-        'description' => '是否删除',
-        'enum' => array(
-            0 => '未删除',
-            1 => '已删除',
-        ),
-        'type' => 'none',
+    array(
+        'title' => '股价',
+        'name' => 'current',
+        'description' => '股价',
+        'enum' => array(),
+        'type' => 'range',
         'widget_type' => '',
     ),
-    7 => array(
-        'title' => '创建时间',
-        'name' => 'created',
-        'description' => '创建时间',
+    array(
+        'title' => '今年涨跌幅',
+        'name' => 'current_year_percent',
+        'description' => '今年涨跌幅',
         'enum' => array(),
-        'type' => 'none',
-        'widget_type' => 'date',
+        'type' => 'range',
+        'widget_type' => '',
     ),
-    8 => array(
-        'title' => '修改时间',
-        'name' => 'modified',
-        'description' => '修改时间',
+    array(
+        'title' => '市值',
+        'name' => 'market_capital',
+        'description' => '市净率',
         'enum' => array(),
-        'type' => 'none',
-        'widget_type' => 'date',
+        'type' => 'range',
+        'widget_type' => '',
+    ),
+    array(
+        'title' => '市盈率',
+        'name' => 'pe_ttm',
+        'description' => '市盈率',
+        'enum' => array(),
+        'type' => 'range',
+        'widget_type' => '',
+    ),
+    array(
+        'title' => '上市日期',
+        'name' => 'issue_date_ts',
+        'description' => '上市日期',
+        'enum' => array(),
+        'type' => 'range',
+        'widget_type' => '',
     ),
 );
 \Form::getInstance()
+    ->input_hidden('simple_line',1)
     ->input_inline_start()
     ->form_schema($init)
-    ->input_submit('<i class="layui-icon"></i> 搜索', ' class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"', 'class="layui-btn layui-btn-primary"')
+    ->input_submit('<i class="layui-icon"></i> 搜索',
+        'class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"',
+        'class="layui-btn layui-btn-primary"',
+        'class="display_none_show_btn layui-btn layui-btn-normal"'
+    )
     ->input_inline_end()
     ->form_class(\LayuiForm::form_class_pane)
     ->form_method(\Form::form_method_get)
     ->form_action('/end.php')
+    ->assign_display_none_field(['id', 'symbol', 'name', 'ps', 'percent', 'pb_ttm', 'current', 'current_year_percent', 'market_capital', 'pe_ttm', 'issue_date_ts',])
     ->create();
 ?>
 <!DOCTYPE html>
@@ -107,19 +126,20 @@ $init = array(
         <fieldset class="table-search-fieldset">
             <legend>搜索信息</legend>
             <div style="margin: 10px 0px 10px 0px">
-                <?= \Form::getInstance()->form_method(\Form::form_method_get)->create() ?>
+                <?= Form::getInstance()->form_method(Form::form_method_get)->create() ?>
             </div>
         </fieldset>
+        <table id="demo" lay-filter="test" class="layui-hide"></table>
     </div>
 </div>
 <script src="https://www.layuicdn.com/layui-v2.5.5/layui.js"></script>
 <script>
-    layui.use(['form'], function () {
+    layui.use(['form','table'], function () {
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$;
         //监听提交
-        form.on('submit(saveBtn)', function (data) {
+        /*form.on('submit(saveBtn)', function (data) {
             if (data.form.method == 'get') {
 
             } else if (data.form.method == 'post') {
@@ -142,8 +162,78 @@ $init = array(
                 )
                 return false;
             }
+        });*/
+
+
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', }
+                ,{field: 'symbol', title: '代码',}
+                ,{field: 'name', title: '名称', width: 135,}
+                ,{field: 'ps', title: '市销率',  }
+                ,{field: 'percent', title: '涨跌幅',}
+                ,{field: 'pb_ttm', title: '市净率',}
+                ,{field: 'current', title: '股价',}
+                ,{field: 'current_year_percent', title: '今年涨跌幅'}
+                ,{field: 'market_capital', title: '市值', }
+                ,{field: 'pe_ttm', title: '市盈率', width: 135, }
+                ,{field: 'issue_date_ts', title: '上市日期', }
+            ]]
+            ,url: '/end.php?simple_line=1' //数据接口
+            ,parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.status ? 0 : 1, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.record //解析数据列表
+                };
+            },
+            limits: [10, 15, 20, 25, 50, 100, 500, 1000, 10000],
+            limit: 15,
+            page: true,
+            //skin: 'line',
+            skin: 'row', //行边框风格
+            even: true, //开启隔行背景
+            size: 'sm', //小尺寸的表格
+            cellMinWidth: 110,
+            loading: true,
+            autoSort: false,
+            text: {
+                none: '暂无相关数据' //默认：无数据。
+            },
+            toolbar: '#barDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
         });
 
+        //执行搜索重载
+        form.on('submit(data-search-btn)', function (data) {
+            table.reload('demo', {
+                page: {
+                    curr: 1
+                }
+                , where: data.field,
+            }, 'data');
+
+            return false;
+        });
+        //表单 高级搜索/基本搜索切换
+        $('.display_none_show_btn').on('click', function () {
+            if ($('.inline_display_none_tag').is(':hidden')) {//如果当前隐藏
+                $('.inline_display_none_tag').show();//点击显示
+                $(this).text('基本搜索 >')
+            } else {//否则
+                $('.inline_display_none_tag').hide();//点击隐藏
+                $(this).text('高级搜索 >')
+            }
+        })
     });
 </script>
 </body>

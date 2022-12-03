@@ -16,7 +16,7 @@ require __DIR__ . '/../src/Form.php';
     ->input_inline_start()
     ->input_text('省份', '', 'sheng', '湖北省')
     ->input_text('市', '', 'shi', '武汉市')
-    ->input_text('区', '', '区', '武昌区')
+    ->input_text('区', '', 'qu', '武昌区')
     ->input_text('街道', '', 'jie', '紫阳路36号')
     ->input_inline_end()
     ->input_hidden('id', '1')
@@ -37,7 +37,7 @@ require __DIR__ . '/../src/Form.php';
         ['value' => '3', 'name' => 'secured'],
     ], 1)
     ->textarea('自我介绍', '', 'description', '张三来自湖北省武汉市武昌区紫阳路36号')
-    ->switchs('是否启用', '', 'status', 1)
+    ->switch('是否启用', '', 'status', 1)
     //->input_date()
     //->editor()
     //->form_data()

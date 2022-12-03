@@ -1,5 +1,5 @@
 ## Form介绍:
->  使用php编写的html动态表单生成工具，没有任何依赖可独立使用,支持链式操作和配置创建表单，支持表单美化(默认为layui风格，支持jquery控制表单行为，只需要引入layui样式和js即可)。
+>  使用php编写的html动态表单生成工具类，没有任何依赖可独立使用,使用composer包管理工具安装，支持链式操作和配置创建表单，支持表单美化(默认为layui风格，支持jquery控制表单行为，只需要引入layui样式和js即可)。
 
 ##  特点:
 
@@ -11,7 +11,7 @@
 
 4. 支持块表单
 
-5. 支持行内表单
+5. 支持行内表单(支持表单表单指定默认隐藏和展示)
 
 6. 支持table表单
 
@@ -40,6 +40,7 @@ php -S 127.0.0.1:88 -t D:\www\github\form\demo
 php -S 127.0.0.1:88 -t {你的代码绝对路径}\form\demo
 
 > 在浏览器中 输入访问地址
+http://127.0.0.1:88/index.php 测试页面集合
 http://127.0.0.1:88/simple.php  对应链式操作创建块表单
 http://127.0.0.1:88/simple_array.php  对应数组配置创建块表单
 http://127.0.0.1:88/simple_line.php  对应行内表单
@@ -207,91 +208,112 @@ Form::getInstance()
 ```php
   <?php
   require __DIR__ . '/../src/Form.php';
-      $init = array(
-                0 => array(
-                    'title' => 'Id',
-                    'name' => 'id',
-                    'description' => 'Id',
-                    'enum' => array(),
-                    'type' => 'hidden',
-                    'widget_type' => '',
-                ),
-                1 => array(
-                    'title' => '用户id',
-                    'name' => 'user_id',
-                    'description' => '用户id',
-                    'enum' => array(),
-                    'type' => 'text',
-                    'widget_type' => '',
-                ),
-                2 => array(
-                    'title' => '用户名',
-                    'name' => 'username',
-                    'description' => '用户名',
-                    'enum' => array(),
-                    'type' => 'text',
-                    'widget_type' => '',
-                ),
-                3 => array(
-                    'title' => '真实姓名',
-                    'name' => 'true_name',
-                    'description' => '真实姓名',
-                    'enum' => array(),
-                    'type' => 'text',
-                    'widget_type' => '',
-                ),
-                4 => array(
-                    'title' => '密码',
-                    'name' => 'password',
-                    'description' => '密码',
-                    'enum' => array(),
-                    'type' => 'text',
-                    'widget_type' => '',
-                ),
-                5 => array(
-                    'title' => '邮箱',
-                    'name' => 'email',
-                    'description' => '邮箱',
-                    'enum' => array(),
-                    'type' => 'text',
-                    'widget_type' => '',
-                ),
-                6 => array(
-                    'title' => '是否删除',
-                    'name' => 'deleted',
-                    'description' => '是否删除',
-                    'enum' => array(
-                        0 => '未删除',
-                        1 => '已删除',
-                    ),
-                    'type' => 'none',
-                    'widget_type' => '',
-                ),
-                7 => array(
-                    'title' => '创建时间',
-                    'name' => 'created',
-                    'description' => '创建时间',
-                    'enum' => array(),
-                    'type' => 'none',
-                    'widget_type' => 'date',
-                ),
-                8 => array(
-                    'title' => '修改时间',
-                    'name' => 'modified',
-                    'description' => '修改时间',
-                    'enum' => array(),
-                    'type' => 'none',
-                    'widget_type' => 'date',
-                ),
-            );
-            \Form::getInstance()
-                ->input_inline_start()
-                ->form_schema($init)
-                ->input_submit('<i class="layui-icon"></i> 搜索', ' class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"', 'class="layui-btn layui-btn-primary"')
-                ->input_inline_end()
-                ->form_class(\LayuiForm::form_class_pane)
-                ->form_method(Form::form_method_get)
-                ->create();
+  $init = array(
+      0 => array(
+          'title' => 'Id',
+          'name' => 'id',
+          'description' => 'Id',
+          'enum' => array(),
+          'type' => 'text',
+          'widget_type' => '',
+      ),
+      1 => array(
+          'title' => '代码',
+          'name' => 'sambol',
+          'description' => '代码',
+          'enum' => array(),
+          'type' => 'text',
+          'widget_type' => '',
+      ),
+      2 => array(
+          'title' => '名称',
+          'name' => 'name',
+          'description' => '名称',
+          'enum' => array(),
+          'type' => 'text',
+          'widget_type' => '',
+      ),
+      3 => array(
+          'title' => '市销率',
+          'name' => 'ps_ttm',
+          'description' => '市销率',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      4 => array(
+          'title' => '涨跌幅',
+          'name' => 'percent',
+          'description' => '涨跌幅',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '市净率',
+          'name' => 'pb_ttm',
+          'description' => '市净率',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '股价',
+          'name' => 'current',
+          'description' => '股价',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '今年涨跌幅',
+          'name' => 'current_year_percent',
+          'description' => '今年涨跌幅',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '市值',
+          'name' => 'market_capital',
+          'description' => '市净率',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '市盈率',
+          'name' => 'pe_ttm',
+          'description' => '市盈率',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+      array(
+          'title' => '上市日期',
+          'name' => 'issue_date_ts',
+          'description' => '上市日期',
+          'enum' => array(),
+          'type' => 'range',
+          'widget_type' => '',
+      ),
+  );
+  \Form::getInstance()
+      ->input_hidden('simple_line',1)
+      ->input_inline_start()
+      ->form_schema($init)
+      ->input_submit('<i class="layui-icon"></i> 搜索',
+          'class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"',
+          'class="layui-btn layui-btn-primary"',
+          'class="display_none_show_btn layui-btn layui-btn-normal"'
+      )
+      ->input_inline_end()
+      ->form_class(\LayuiForm::form_class_pane)
+      ->form_method(\Form::form_method_get)
+      ->form_action('/end.php')
+      ->assign_display_none_field(['id', 'symbol', 'name', 'ps', 'percent', 'pb_ttm', 'current', 'current_year_percent', 'market_capital', 'pe_ttm', 'issue_date_ts',])
+      ->create();
+  ?>
 ```
 
 
