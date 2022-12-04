@@ -480,12 +480,6 @@ ST;
             } else {
                 $init_data['value'] = '';
             }
-            $display_none_css_str = '';
-            $display_none_class_str = '';
-            if (in_array($init_data['name'], $this->form_instance->display_none_field)) {
-                $display_none_css_str = "style=\"display:none\"";
-                $display_none_class_str = 'inline_display_none_tag';
-            }
             $input_type = $init_data['type'] ?? '';
             if (strtolower($input_type) == 'hidden') {
                 $input_html = $this->render_input($init_data, $init_data['value'] ?? '');
@@ -500,6 +494,12 @@ ST;
                 </div>
 ST;
             } elseif (strtolower($input_type) == 'range') {
+                $display_none_css_str = '';
+                $display_none_class_str = '';
+                if (in_array($init_data['name'], $this->form_instance->display_none_field)) {
+                    $display_none_css_str = "style=\"display:none\"";
+                    $display_none_class_str = 'inline_display_none_tag';
+                }
                 $init_data['name'] = $init_data['name'] . "[]";
                 $input_html1 = $this->render_input($init_data, isset($init_data['value'][0]) ? $init_data['value'][0] : '');
                 $input_html2 = $this->render_input($init_data, isset($init_data['value'][1]) ? $init_data['value'][1] : '');
@@ -517,6 +517,12 @@ ST;
                   </div>
 str;
             } else {
+                $display_none_css_str = '';
+                $display_none_class_str = '';
+                if (in_array($init_data['name'], $this->form_instance->display_none_field)) {
+                    $display_none_css_str = "style=\"display:none\"";
+                    $display_none_class_str = 'inline_display_none_tag';
+                }
                 $input_html = $this->render_input($init_data, $init_data['value'] ?? '');
                 $label_text = $init_data['title'] ?? '';
                 $html = <<<str
